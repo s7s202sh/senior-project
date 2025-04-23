@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | Project Manager</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-sm text-center">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">Login to Project Manager</h2>
+    <button id="loginBtn" class="w-full bg-blue-600 text-white py-2 px-4 rounded-xl hover:bg-blue-700 transition">
+      Sign in with Microsoft
+    </button>
+  </div>
+
+  <!-- Firebase SDK using Modules -->
+  <script type="module">
+    // Import Firebase modules
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+    import { getAuth, OAuthProvider, getRedirectResult, signInWithRedirect } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDLVRCW9kOy8OoxdPeihjYzqBLzsRCZKn8",
+      authDomain: "project-management-login-f3f3a.firebaseapp.com",
+      projectId: "project-management-login-f3f3a",
+      storageBucket: "project-management-login-f3f3a.appspot.com",
+      messagingSenderId: "615938225612",
+      appId: "1:615938225612:web:2b5684506c35f68a54d969",
+      measurementId: "G-NYRCK8CYW5"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new OAuthProvider('microsoft.com');
+
+    // Handle sign-in button click
+    document.getElementById('loginBtn').addEventListener('click', () => {
+      signInWithRedirect(auth, provider);
+    });
+
+    // Check login result after redirect
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result && result.user) {
+          const email = result.user.email;
+          if (email.endsWith("@uob.edu.bh")) {
+            window.location.href = "/supervisor.html";  // Redirect to supervisor page
+          } else if (email.endsWith("@stu.uob.edu.bh")) {
+            window.location.href = "/student.html";     // Redirect to student page
+          } else {
+            alert("Access Denied: Only @uob.edu.bh or @stu.uob.edu.bh emails are allowed.");
+          }
+        }
+      })
+      .catch((error) => {
+        console.error("Login error:", error.message);
+      });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
