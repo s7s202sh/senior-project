@@ -34,7 +34,7 @@ class _WebViewAppState extends State<WebViewApp> {
     requestStoragePermission();
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..loadRequest(Uri.parse('https://www.uob.edu.bh/'));
+      ..loadRequest(Uri.parse('https://project-management-login-f3f3a.firebaseapp.com'));
   }
 
   // ✅ Request permission if needed (only for older Android versions)
